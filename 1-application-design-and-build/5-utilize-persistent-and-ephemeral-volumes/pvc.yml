@@ -3,10 +3,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc1
   namespace: ckad
+  annotations:
+    volume.kubernetes.io/selected-node: kind-control-plane
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 2Gi
   storageClassName: sc1
+

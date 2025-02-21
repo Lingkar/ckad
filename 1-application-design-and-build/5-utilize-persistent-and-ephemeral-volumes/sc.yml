@@ -1,1 +1,10 @@
 # Empty file. Use this to define the new StorageClass
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc1
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+provisioner: rancher.io/local-path
+
