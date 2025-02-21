@@ -43,13 +43,13 @@ Answers to each task can be found in the `answers.md` file.
 
 The `be-deploy.yml` file defines a Deployment called "store-backend" that relies on a separate database.
 
-Add a second container to the Pod template and ensure it runs before the main app container starts. 
+Add a second container to the Pod template and ensure it runs before the main app container starts.
 
 Name this additional container "check-db", base it on the `postgres:9.6.5` image, and configure it with the following command block.
 
 ```
-command: ['sh', '-c', 
-  'until pg_isready -h postgres -p 5432; 
+command: ['sh', '-c',
+  'until pg_isready -h postgres -p 5432;
   do echo waiting for database; sleep 2; done;']
 ```
 
@@ -84,3 +84,4 @@ The following comands will cleanup any objects deployed as part of these tasks. 
 ```
 kubectl delete -f be-deploy.yml -f db-deploy.yml
 ```
+

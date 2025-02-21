@@ -8,8 +8,9 @@ metadata:
     app: db
 data:
   # User DB
-  POSTGRES_DB: postgres
+  POSTGRES_DB: db
   # Db user
   POSTGRES_USER: postgres
   # Db password
   POSTGRES_PASSWORD: testPassword
+
