@@ -20,6 +20,15 @@ Edit the `sc.yml` file so it looks like this.
 
 You'll need to substitute the block storage plugin appropriate for your lab environment. We list some below.
 
+JBUI:
+Often kubernetes clusters come with a default StorageClass. If in a PVC the StorageClass is not defined it will default to this StorageClass.
+In our case we need to make a custom StorageClass to meet the given requirements.
+We can use this default StorageClass to learn what provisioner is being used within our cluster.
+Running `k get StorageClass` shows us the default StorageClass available named "standard".
+We can get the yaml code for this storage class with `k get StorageClass standard -o yaml`.
+Don't copy paste everything, just take what you need as some of these values are set during "run-time".
+In our case we want to re-use the provisioner field.
+
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
