@@ -52,7 +52,7 @@ Edit the empty `sc.yml` file to define a new StorageClass with the following con
 Name: sc1
 Reclaim policy: Retain
 Expandable: True
-Volume Binding Mode: Immediate
+Volume Binding Mode: WaitForFirstCustomer
 
 Save your changes, deploy it to your cluster, and verify it was created correctly.
 
@@ -78,3 +78,4 @@ The following comands will cleanup any Jobs and CronJobs from these tasks. Be su
 ```
 kubectl delete -f sc.yml -f lab-setup.yml
 ```
+

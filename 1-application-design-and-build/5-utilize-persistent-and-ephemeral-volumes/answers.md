@@ -10,7 +10,7 @@ Edit the empty `sc.yml` file to define a new StorageClass with the following con
 Name: sc1
 Reclaim policy: Retain
 Expandable: True
-Volume Binding Mode: Immediate
+Volume Binding Mode: WaitForFirstCustomer
 
 Save your changes, deploy it to your cluster, and verify it was created correctly.
 
@@ -25,10 +25,10 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: sc1
-provisioner: <insert-your-storage-plugin-name>
+provisioner: rancher.io/local-path
 reclaimPolicy: Retain
 allowVolumeExpansion: true
-volumeBindingMode: Immediate
+volumeBindingMode: WaitForFirstCustomer
 ```
 
 Plugin for AWS: ebs.csi.aws.com
@@ -36,7 +36,7 @@ Plugin for Azure: disk.csi.azure.com
 Plugin for GCP: pd.csi.storage.gke.io
 Plugin for Digital Ocean: dobs.csi.digitalocean.com
 Plugin for Linode: linodebs.csi.linode.com
-Plugin for Docker Desktop: docker.io/hostpath 
+Plugin for Docker Desktop: docker.io/hostpath
 For a complete list, see [here](https://kubernetes-csi.github.io/docs/drivers.html)
 
 Save your changes and deploy the object with the following command. Be sure to run it form the `1 Application Design and Build/5 Utilize Persistent and Ephemeral Volumes` directory.
