@@ -1,4 +1,4 @@
-FROM ode:lts-alpine
+FROM node:lts-alpine
 
 # set the current working directory inside the container
 WORKDIR /app
@@ -21,3 +21,4 @@ ENV APP_URL=http://localhost
 # when starting the container, by default run
 # the node development server
 CMD npm run serve
+

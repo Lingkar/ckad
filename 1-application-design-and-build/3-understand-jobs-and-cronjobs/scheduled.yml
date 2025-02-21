@@ -3,14 +3,14 @@ kind: CronJob
 metadata:
   name: ckad-cron1
 spec:
-  schedule: "* * * * *"
+  schedule: "*/2 * * * *"
   startingDeadlineSeconds: 30
-  concurrencyPolicy: Allow
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 2
   jobTemplate:
     spec:
-      template: 
+      template:
         spec:
           containers:
           - name: ckad-ctr
@@ -21,3 +21,4 @@ spec:
             - -c
             - echo "Let's smash the CKAD"; sleep 600
           restartPolicy: OnFailure
+
