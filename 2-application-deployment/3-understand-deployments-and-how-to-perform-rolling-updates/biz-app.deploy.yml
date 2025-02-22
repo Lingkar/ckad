@@ -18,7 +18,8 @@ spec:
         app: biz-app
     spec:
       containers:
-      - image: nginx:7.85.1-alpine
+      - image: nginx:1.17.8-alpine
         name: nginx
         resources: {}
 status: {}
+

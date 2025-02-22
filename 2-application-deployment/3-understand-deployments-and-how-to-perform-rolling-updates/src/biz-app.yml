@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"kind":"Deployment","apiVersion":"apps/v1","metadata":{"name":"biz-app","creationTimestamp":null,"labels":{"app":"biz-app"}},"spec":{"replicas":4,"selector":{"matchLabels":{"app":"biz-app"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"biz-app"}},"spec":{"containers":[{"name":"nginx","image":"nginx:1.17.8-alpine","resources":{}}]}},"strategy":{}},"status":{}}
+  creationTimestamp: null
+  labels:
+    app: biz-app
+  name: biz-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: biz-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: biz-app
+    spec:
+      containers:
+      - image: nginx:7.85.1-alpine
+        name: nginx
+        resources: {}
+status: {}
+
