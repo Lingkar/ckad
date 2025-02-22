@@ -25,6 +25,13 @@ KUBE_EDITOR="nano" k edit deploy/nginx-deploy
 
 4. Ensure the service is associated with the `nginx-deploy` Pods by running the following command and checking that it returns HTML content. Replace `<node-port>` with the `nginx-svc` node port value.
 
+JBUI:
+As the curl command will not work from our own WSL / Windows machine we first need to open a shell from the control-plane node.
+Via the docker CLI this can be achieved with the following command:
+```
+docker exec -it {{KIND-CONTROL-PLANE CONTAINER ID OR NAME}} /bin/bash
+```
+
 ```
 k get service nginx-svc
 curl http://localhost:<node-port-value>
@@ -89,16 +96,16 @@ k scale deploy canary-deployment --replicas=2
 
 3. Modify the `canary` Deployment so that the Service will match it and direct traffic to the Pods.
 
-4. Create a temporary Pod named `temp-pod` as an interactive TTY. Use the `alpine` image for the Pod and set `restart` to `Never`. 
+4. Create a temporary Pod named `temp-pod` as an interactive TTY. Use the `alpine` image for the Pod and set `restart` to `Never`.
 
   ```
   KUBE_EDITOR="nano" k edit deploy canary-deployment
-  
+
   # Add app: customer-app label into deployment template labels
   ```
 
 
-5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed: 
+5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed:
 
   ```
   # Get service cluster IP
@@ -107,3 +114,4 @@ k scale deploy canary-deployment --replicas=2
   apk add curl
   curl <service-cluster-ip>
   ```
+

@@ -59,6 +59,13 @@ Answers to the question tasks can be found in the `answers.md` file.
 
 `curl localhost:<node-port-value>`
 
+JBUI:
+We can't do this from our "own" machine (WSL or Windows) as our control plane node does not share our own localhost network.
+Although it is possible to let a docker container share the localhost network: https://docs.docker.com/engine/network/drivers/host/
+This is often not desired, we rather explicitly map available host ports (from our WSL or windows machine) to the ports of a docker container in our case the kind cluster.
+I believe we will do this mapping later on with: https://kind.sigs.k8s.io/docs/user/ingress/
+For now to be able to run the curl command above open a shell from within the control-plane node, as this will give you access to the localhost network of the control-plane node.
+
 ### Task 2
 
 **IMPORTANT:** This task assumes that you have images named `ckad:blue` and `ckad:green` available on your system. To create them, go to the `Blue-Green/build` folder and run `docker-compose build` to create the images.
@@ -89,8 +96,9 @@ Your system has `ckad:stable` and `ckad:canary` images available and the current
 
 3. Modify the `canary` Deployment so that the Service will match it and direct traffic to the Pods.
 
-4. Create a temporary Pod named `temp-pod` as an interactive TTY. Use the `alpine` image for the Pod and set `restart` to `Never`. 
+4. Create a temporary Pod named `temp-pod` as an interactive TTY. Use the `alpine` image for the Pod and set `restart` to `Never`.
 
-5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed: 
+5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed:
 
     `curl localhost`
+
