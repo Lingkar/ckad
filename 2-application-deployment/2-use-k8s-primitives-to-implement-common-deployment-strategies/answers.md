@@ -138,11 +138,13 @@ k scale deploy canary-deployment --replicas=2
 
 5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed:
 
-  ```
-  # Get service cluster IP
-  k get svc public-service
-  k run -it --restart=Never --image=alpine temp-pod
-  apk add curl
-  curl <service-cluster-ip>
-  ```
+    ```
+    # Get service cluster IP
+    k get svc public-service
+    k run -it --restart=Never --image=alpine temp-pod
+    apk add curl
+    ```
+    `curl <service-cluster-ip>`
+    or
+    `curl public-service`
 

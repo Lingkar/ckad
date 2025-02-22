@@ -126,5 +126,7 @@ Your system has `ckad:stable` and `ckad:canary` images available and the current
 
 5. Install `curl` into the `temp-pod` container using `apk add curl`, and run the following command until the output from a `canary` Pod is displayed:
 
-    `curl localhost`
+    `curl {{CLUSTER_IP_PUBLIC_SVC}}`
+    or
+    `curl public-service`
 
