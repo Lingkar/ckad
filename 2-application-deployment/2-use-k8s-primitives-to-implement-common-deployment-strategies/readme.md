@@ -63,26 +63,52 @@ JBUI:
 We can't do this from our "own" machine (WSL or Windows) as our control plane node does not share our own localhost network.
 Although it is possible to let a docker container share the localhost network: https://docs.docker.com/engine/network/drivers/host/
 This is often not desired, we rather explicitly map available host ports (from our WSL or windows machine) to the ports of a docker container in our case the kind cluster.
-I believe we will do this mapping later on with: https://kind.sigs.k8s.io/docs/user/ingress/
 For now to be able to run the curl command above open a shell from within the control-plane node, as this will give you access to the localhost network of the control-plane node.
 
 ### Task 2
 
+**JBUI: IMPORTANT:**
+We will need to do some additional set-up to get the Service type LoadBalancer to work with our Kind set-up.
+A use-case for the LoadBalancer type in Kubernetes is to provision an External ip address which resolves to the service.
+Kubernetes itself generally does not have the capability to do this provisioning on it's own.
+For example in Azure when we create such a service with LoadBalancer type, Azure will pick this up and provision a public ip address resource for us and bind it to the service.
+This allows us to reach the service via the newly provisioned ip address.
+For our local kind cluster we need to play the role of Azure and provision these external IP addresses in our own machines network to the LoadBalancer services.
+Luckily there is an out of the box solution for kind: https://kind.sigs.k8s.io/docs/user/loadbalancer/
+Following the docs run the install of the go binary from your WSL.
+```
+go install sigs.k8s.io/cloud-provider-kind@latest
+```
+And from a separate terminal launch the application and keep it running when working with your kind cluster.
+This one will check all available local kind clusters, and within those clusters bind all found LoadBalancer Services to an ip address which is reachable from your machine.
+```
+cloud-provider-kind
+```
+
+
 **IMPORTANT:** This task assumes that you have images named `ckad:blue` and `ckad:green` available on your system. To create them, go to the `Blue-Green/build` folder and run `docker-compose build` to create the images.
+
+JBUI:
+Remember we are using our dedicated kind hosted OCI registry.
 
 The current folder contains Kubernetes YAML files to create Blue/Green deployments and services. Images you'll use are also available on the system. View the files in the current folder using:
 
 `ls -l`
 
 1. View the selectors in the `blue.svc.yml` and `green.svc.yml` files. Add a `role: blue` selector to `public.svc.yml`.
+JBUI:
+And fix the issue if your pods are unable to come online
 
 2. Create the resources in Kubernetes using the YAML files available in the current folder. Run the following command to verify that the `blue` Pods are accessible using the public service.
 
-    `curl localhost`
+JBUI:
+Check which ip address the LoadBalancer got assigned to by inspecting your services and performing a curl, or check via the browser!
+
+    `curl {{EXTERNAL_IP}}`
 
 3. Change the public service's `role` selector from `blue` to `green`. Run the following command to verify that the `green` Pods are accessible using the public service.
 
-    `curl localhost`
+    `curl {{EXTERNAL_IP}}`
 
 ### Task 3
 

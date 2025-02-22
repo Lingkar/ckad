@@ -41,13 +41,25 @@ curl http://localhost:<node-port-value>
 
 ### Task 2
 
-**IMPORTANT:** This task assumes that you have images named `ckad:blue` and `ckad:green` available on your system. To create them, go to the `Blue-Green/Build` folder and run `docker-compose build` to create the images.
+**JBUI IMPORTANT:** This task assumes that you have images named `ckad:blue` and `ckad:green` available on from you OCI registry.
+To create them you can do it multiple ways:
+1. go to the `Blue-Green/Build` folder and run adjust the docker-compose to tag the image with the prefix image: localhost:5001/ckad:blue and image: localhost:5001/ckad:green. And push the images to the OCI registry.
+2. go to the `Blue-Green/Build` folder and run `docker-compose build` to create the images. Tag them to localhost:5001 via the docker tag command and push them.
+e.g.
+```
+docker tag ckad:blue localhost:5001/ckad:blue
+docker push localhost:5001/ckad:blue
+```
+repeat for green
 
 The current folder contains Kubernetes YAML files to create Blue/Green deployments and services. Images you'll use are also available on the system. View the files in the current folder using:
 
 `ls -l`
 
 1. View the selectors in the `blue.svc.yml` and `green.svc.yml` files. Add a `role: blue` selector to `public.svc.yml`.
+
+JBUI:
+Or vim
 
   ```
     nano blue.svc.yml
@@ -57,22 +69,41 @@ The current folder contains Kubernetes YAML files to create Blue/Green deploymen
 
 2. Create the resources in Kubernetes using the YAML files available in the current folder. Run the following command to verify that the `blue` Pods are accessible using the public service.
 
-    `curl localhost`
+JBUI: heavily changed based on our Kind cluster
 
-  ```
-    k config set-context --current --namespace=dev
-    k create -f ./
-    curl localhost
-  ```
+First find the External IP address:
+`k get service`
+
+This gives you something like:
+```
+NAME                 TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+blue-test-service    LoadBalancer   10.96.165.74   172.20.0.6    9000:31754/TCP   39m
+green-test-service   LoadBalancer   10.96.79.43    172.20.0.5    9001:31700/TCP   39m
+kubernetes           ClusterIP      10.96.0.1      <none>        443/TCP          18h
+public-service       LoadBalancer   10.96.226.62   172.20.0.4    80:31111/TCP     39m
+```
+If External-IP is pending something might be wrong with your cloud-provider-kind, please sent a message to the Course teams chat.
+
+And curl the external ip of the public-service
+`curl {{EXTERNAL-IP}}`
 
 3. Change the public service's `role` selector from `blue` to `green`. Run the following command to verify that the `green` Pods are accessible using the public service.
 
-    `curl localhost`
+`curl {{EXTERNAL-IP}}`
 
-  ```
-    k set selector svc public-service "role=green"
-    curl localhost
-  ```
+Do it declarative via the public.svc.yml file
+```
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+    role: green
+```
+or imperative via:
+```
+k set selector svc public-service "role=green"
+curl {{EXTERNAL-IP}}
+```
 
 ### Task 3
 
