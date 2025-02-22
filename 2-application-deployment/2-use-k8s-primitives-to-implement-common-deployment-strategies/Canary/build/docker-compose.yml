@@ -4,19 +4,20 @@ services:
 
   blue:
     container_name: stable
-    image: ckad:stable
+    image: localhost:5001/ckad:stable
     build:
       context: ./stable
       dockerfile: stable.dockerfile
     ports:
      - 8080:80
-    
+
 
   green:
     container_name: canary
-    image: ckad:canary
+    image: localhost:5001/ckad:canary
     build:
       context: ./canary
       dockerfile: canary.dockerfile
     ports:
      - 8081:80
+

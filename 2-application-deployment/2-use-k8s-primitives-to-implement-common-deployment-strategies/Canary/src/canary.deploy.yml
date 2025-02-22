@@ -3,18 +3,20 @@ kind: Deployment
 metadata:
   name: canary-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
+      app: customer-app
       track: canary
   template:
     metadata:
       labels:
+        app: customer-app
         track: canary
     spec:
       containers:
       - name: canary
-        image: ckad:canary
+        image: localhost:5001/ckad:canary
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -22,3 +24,4 @@ spec:
           limits:
             memory: "128Mi" # 128 MB
             cpu: "200m" # 200 millicpu (.2 cpu or 20% of the cpu)
+

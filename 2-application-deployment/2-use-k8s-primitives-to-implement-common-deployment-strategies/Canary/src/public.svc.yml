@@ -8,6 +8,8 @@ spec:
   type: LoadBalancer
   selector:
     app: customer-app
+    track: canary
   ports:
     - port: 80
       targetPort: 80
+
