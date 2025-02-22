@@ -1,14 +1,15 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: public-service
+  name: green-test-service
   labels:
-    env: prod
+    env: green
 spec:
   type: LoadBalancer
   selector:
     app: nginx
-    
+    role: green
   ports:
-    - port: 80
+    - port: 9001
       targetPort: 80
+

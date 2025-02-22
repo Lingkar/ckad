@@ -4,19 +4,20 @@ services:
 
   blue:
     container_name: blue
-    image: ckad:blue
+    image: localhost:5001/ckad:blue
     build:
       context: ./blue
       dockerfile: blue.dockerfile
     ports:
      - 8080:80
-    
+
 
   green:
     container_name: green
-    image: ckad:green
+    image: localhost:5001/ckad:green
     build:
       context: ./green
       dockerfile: green.dockerfile
     ports:
      - 8081:80
+
