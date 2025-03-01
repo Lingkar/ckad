@@ -62,7 +62,7 @@ Answers to the question tasks can be found in the `answers.md` file.
 
 4. View the pod's events and see if any readiness or liveness probe errors are displayed.
 
-5. Ensure that the pod's `restarts` value is at `0`. 
+5. Ensure that the pod's `restarts` value is at `0`.
 
 ### Task 2
 
@@ -78,3 +78,4 @@ Answers to the question tasks can be found in the `answers.md` file.
 3. Look to see if the Pod is ready yet. After around `30` seconds, view the Pod events and notice any errors.
 
 4. Add a watch to the Pods and notice any restarts to the busybox Pod.
+

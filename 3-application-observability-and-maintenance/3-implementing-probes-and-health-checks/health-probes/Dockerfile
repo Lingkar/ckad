@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 
@@ -18,4 +18,5 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y curl
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "health-probes.dll"]```
+ENTRYPOINT ["dotnet", "health-probes.dll"]
+
