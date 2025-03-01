@@ -55,7 +55,7 @@ Answers to the question tasks can be found in the `answers.md` file.
 
 3. Enable the `NamespaceAutoProvision` admission controller for the cluster.
 
-4. Invoke the `kube-apiserver` binary's help documentation for `enable-admission-plugins`. 
+4. Invoke the `kube-apiserver` binary's help documentation for `enable-admission-plugins`.
 
 
 ### Task 2
@@ -71,3 +71,4 @@ Answers to the question tasks can be found in the `answers.md` file.
 5. Display the preferred version for the autoscaling API group.
 
 6. List any alpha versions enabled on the cluster.
+

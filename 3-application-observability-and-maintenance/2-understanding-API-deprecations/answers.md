@@ -14,18 +14,18 @@ cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep admission-plugins
 2. Display admission controllers by using `kubectl describe`.
 
 ```bash
-k describe pod kube-apiserver-master 
+k describe pod kube-apiserver-master
 k describe pod kube-apiserver-master | grep enable-admission-plugins
 ```
 
 3. Enable the `NamespaceAutoProvision` admission controller for the cluster.
 
 ```bash
-nano /etc/kubernetes/manifests/kube-apiserver.yaml 
+nano /etc/kubernetes/manifests/kube-apiserver.yaml
 # ctrl + x to save
 ```
 
-4. Invoke the `kube-apiserver` binary's help documentation for `enable-admission-plugins`. 
+4. Invoke the `kube-apiserver` binary's help documentation for `enable-admission-plugins`.
 
 ```bash
 # Following command assumes you're already in the kube-system namespace
