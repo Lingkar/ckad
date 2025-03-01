@@ -29,7 +29,7 @@ The following lists each question and associated answer.
   KUBE_EDITOR="nano" k edit deploy web-app
 
   OR
-  
+
   k set image deploy web-app nginx=nginx:1.23.1-alpine
   ```
 
@@ -104,9 +104,10 @@ The following lists each question and associated answer.
 
   ```
   k get pods -o yaml | grep nginx:1.17.8-alpine
-  
+
   OR
-  
+
   # If we want the line count where nginx:1.17.8-alpine appears
   k get pods -o yaml | grep nginx:1.17.8-alpine | wc –l
   ```
+

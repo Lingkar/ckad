@@ -29,7 +29,7 @@ If you haven't already done so, clone the repo with the following command.
 $ git clone https://github.com/nigelpoulton/ckad.git
 ```
 
-Run the following command to change into the correct directory. The tasks expect your terminal to be in this directory. 
+Run the following command to change into the correct directory. The tasks expect your terminal to be in this directory.
 
 ```
 $ cd ckad/2\ Application\ Deployment/4\ Use\ the\ Helm\ Package\ Manager\ to\ Deploy\ Existing\ Packages/
@@ -76,13 +76,13 @@ Answers to the question tasks can be found in the `answers.md` file.
 4. Create a `wordpress-values.yml` file in the current folder and add the following content:
 
     ```
-    wordpressUsername: admin 
-    wordpressPassword: admin 
-    wordpressEmail: admin@admin.com 
-    wordpressFirstName: Jane 
-    wordpressLastName: Doe 
-    wordpressBlogName: admin.com 
-    service: 
+    wordpressUsername: admin
+    wordpressPassword: admin
+    wordpressEmail: admin@admin.com
+    wordpressFirstName: Jane
+    wordpressLastName: Doe
+    wordpressBlogName: admin.com
+    service:
       type: LoadBalancer
     ```
 
