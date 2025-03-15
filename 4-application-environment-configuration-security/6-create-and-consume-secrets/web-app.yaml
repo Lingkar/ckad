@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+spec:
+  restartPolicy: Never
+  containers:
+    - name: busybox
+      image: busybox:stable
+      command: ['sh', '-c', 'echo $DB_USERNAME; echo $DB_PASSWORD; echo $DB_PORT; echo $APP_PORT']
