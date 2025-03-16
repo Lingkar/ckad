@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ps-logger
+spec:
+  restartPolicy: Never
+  containers:
+  - name: busybox
+    image: busybox:stable
+    command: ['sh', '-c', 'echo $LOG_FORMAT; echo $BUFFER_SIZE; cat /tmp/logging-init.sh']
+    env:
+    - name: LOG_FORMAT
+      valueFrom:
+        configMapKeyRef:
+          name: logging-cm
+          key: LOG_FORMAT
+    - name: BUFFER_SIZE
+      valueFrom:
+        configMapKeyRef:
+          name: logging-cm
+          key: BUFFER_SIZE
+    volumeMounts:
+    - mountPath: /tmp/
+      name: logging-script
+      readOnly: true
+  volumes:
+  - name: logging-script
+    configMap:
+      name: logging-cm
+---
+apiVersion: v1
+data:
+  logging-init.sh: |
+    #!/bin/bash
+    mkdir -p /var/log/logging-service
+    chmod 755 /var/log/logging-service
+    touch /var/log/logging-service/service.log
+    chmod 644 /var/log/logging-service/service.log
+    echo "$(date) - Logging Service Initialization Complete." >> /var/log/logging-service/service.log
+  LOG_FORMAT: json
+  BUFFER_SIZE: "512"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: logging-cm
