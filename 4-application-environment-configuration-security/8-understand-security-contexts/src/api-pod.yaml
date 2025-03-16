@@ -3,7 +3,15 @@ kind: Pod
 metadata:
   name: api-pod
 spec:
+  securityContext:
+    runAsUser: 2000
+    runAsGroup: 3000
   containers:
   - name: busybox
     image: busybox:stable
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+        - "CAP_NET_BIND_SERVICE"
     command: ['sh', '-c', 'while true; do echo Running...; sleep 5; done']

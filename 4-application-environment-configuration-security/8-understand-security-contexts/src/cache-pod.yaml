@@ -3,13 +3,21 @@ kind: Pod
 metadata:
   name: cache-pod
 spec:
+  securityContext:
+    runAsUser: 4050
+    runAsGroup: 4050
   containers:
   - name: busybox
     image: busybox:stable
+    securityContext:
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+        - "SYS_TIME"
     command: ['sh', '-c', 'while true; do echo Running...; sleep 5; done']
     volumeMounts:
     - mountPath: /var/cache
       name: cache-volume
   volumes:
-    - name: cache-volume
-      emptyDir: {}
+  - name: cache-volume
+    emptyDir: {}
