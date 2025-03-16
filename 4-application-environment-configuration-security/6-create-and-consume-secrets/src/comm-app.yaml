@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comm-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comm-app
+  template:
+    metadata:
+      labels:
+        app: comm-app
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:stable
+        command: ['sh', '-c', 'echo $USERNAME; echo $PASSWORD; echo $NEW_CHECKOUT_FLOW; echo $MAX_TRANSACTION_VALUE; echo $LOG_LEVEL']
+        envFrom:
+        - configMapRef:
+            name: com-app-config
+        - secretRef:
+            name: com-app-creds
+---
+apiVersion: v1
+data:
+  USERNAME: U0dsb2FXaGxiR3h2Q2c9PQ==
+  PASSWORD: ZEdocGMybHpiWGx3WVhOemQyOXlaQW89
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: com-app-creds
+---
+apiVersion: v1
+data:
+  NEW_CHECKOUT_FLOW: enabled
+  MAX_TRANSACTION_VALUE: "5000"
+  LOG_LEVEL: INFO
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: com-app-config

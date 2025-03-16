@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-svc
+  template:
+    metadata:
+      labels:
+        app: message-svc
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:stable
+        command: ['sh', '-c', 'echo $USERNAME; echo $PASSWORD; echo $MESSAGE_QUEUE_NAME; echo $RETRY_ATTEMPTS; echo $LOG_LEVEL']
+        envFrom:
+        - configMapRef:
+            name: message-svc-config
+        - secretRef:
+            name: message-svc-creds
+---
+apiVersion: v1
+data:
+  USERNAME: YnJva2VydXNlcm5hbWUK
+  PASSWORD: YnJva2VycGFzc3dvcmQK
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: message-svc-creds
+---
+apiVersion: v1
+data:
+  MESSAGE_QUEUE_NAME: orders
+  RETRY_ATTEMPTS: "5"
+  LOG_LEVEL: WARN
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: message-svc-config
